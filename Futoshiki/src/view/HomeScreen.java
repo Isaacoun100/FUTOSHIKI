@@ -24,25 +24,30 @@ public class HomeScreen {
         playFutoshikiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Board();
 
             }
         });
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                frame.dispose();
+                new SettingsScreen();
             }
         });
         top10Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                frame.dispose();
+                new TopScreen();
             }
         });
         aboutUsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                frame.dispose();
+                new AboutUs();
             }
         });
         helpButton.addActionListener(new ActionListener() {
