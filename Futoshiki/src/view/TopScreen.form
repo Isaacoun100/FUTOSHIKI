@@ -32,7 +32,7 @@
                   <text value="Hard"/>
                 </properties>
               </component>
-              <component id="5f9bc" class="javax.swing.JList" binding="list1" default-binding="true">
+              <component id="5f9bc" class="javax.swing.JList" binding="hardList">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -71,7 +71,7 @@
                   <text value="Easy"/>
                 </properties>
               </component>
-              <component id="5f174" class="javax.swing.JList" binding="list3" default-binding="true">
+              <component id="5f174" class="javax.swing.JList" binding="easyList">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -110,7 +110,7 @@
                   <text value="Intermediate"/>
                 </properties>
               </component>
-              <component id="a13f4" class="javax.swing.JList" binding="list2" default-binding="true">
+              <component id="a13f4" class="javax.swing.JList" binding="intermediateList">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
@@ -174,7 +174,7 @@
               <text value="Matrix size"/>
             </properties>
           </component>
-          <component id="c8b06" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="c8b06" class="javax.swing.JComboBox" binding="sizeComboBox">
             <constraints>
               <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
