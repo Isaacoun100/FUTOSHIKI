@@ -1,8 +1,14 @@
 package view;
 
+import controller.ManageSettings;
+import model.Settings;
+import org.json.simple.parser.ParseException;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Set;
 
 public class HomeScreen {
     private JPanel HomeScreenPanel;
@@ -11,6 +17,7 @@ public class HomeScreen {
     private JButton top10Button;
     private JButton aboutUsButton;
     private JButton helpButton;
+    private Settings settings;
 
     public HomeScreen() {
 
@@ -21,19 +28,26 @@ public class HomeScreen {
         frame.setResizable(false);
         frame.setVisible(true);
 
+        try {
+            settings = ManageSettings.getSettings();
+        }
+        catch (IOException | ParseException e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage(), "There is an issue with the settings file", JOptionPane.ERROR_MESSAGE);
+            throw new RuntimeException(e);
+        }
+
         playFutoshikiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new Board();
-
+                new GamePanel(settings);
             }
         });
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new SettingsScreen();
+                new SettingsScreen(settings);
             }
         });
         top10Button.addActionListener(new ActionListener() {
@@ -58,4 +72,5 @@ public class HomeScreen {
             }
         });
     }
+
 }
