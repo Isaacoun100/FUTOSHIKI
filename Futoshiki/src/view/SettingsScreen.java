@@ -22,7 +22,7 @@ public class SettingsScreen {
     private JButton defaultButton;
     private JComboBox sideComboBox;
 
-    public SettingsScreen() {
+    public SettingsScreen(Settings settings) {
 
         JFrame frame = new JFrame("Add Admin");
         frame.setContentPane(SettingsPanel);
@@ -31,7 +31,7 @@ public class SettingsScreen {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        setValues();
+        setValues(settings);
 
         returnToPreviousMenuButton.addActionListener(new ActionListener() {
             @Override
@@ -84,33 +84,15 @@ public class SettingsScreen {
     }
 
     /**
-     * This method assigns the values from the settings file to
-     * the values in the window
-     */
-    private void setValues(){
-
-        try {
-            Settings settings = ManageSettings.getSettings();
-            setValues(settings);
-        }
-
-        catch (IOException | ParseException e) {
-            System.out.println("There is an issue with the settings file");
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    /**
      * I wanted to feel like a smart ass, so I overloaded the method cause
      * also I'm lazy, so this method receives the Settings value and it assigns
      * it to the values in the screen
      * @param settings
      */
     private void setValues(Settings settings){
-        sizeComboBox.setSelectedItem(settings.getSize()-3);
+        sizeComboBox.setSelectedItem(settings.getSize()+" by "+settings.getSize());
         difficultyComboBox.setSelectedItem(settings.getDifficulty());
-        multilevelComboBox.setSelectedItem(settings.isMultilevel());
+        multilevelComboBox.setSelectedItem( String.valueOf(settings.isMultilevel()) );
         timeComboBox.setSelectedItem(settings.getClock());
         sideComboBox.setSelectedItem(settings.getSide());
     }

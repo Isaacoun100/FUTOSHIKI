@@ -143,8 +143,8 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value="Yes"/>
-                    <item value="No"/>
+                    <item value="false"/>
+                    <item value="true"/>
                   </model>
                 </properties>
               </component>
