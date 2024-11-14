@@ -122,6 +122,7 @@ public class Futoshiki extends JPanel implements ActionListener {
         for (Value value : board.getValues()) {
             if( value.getY()== cell_i && value.getX()== cell_j){
                 cell.setText(String.valueOf(value.getValue()));
+                cell.setEnabled( false );
                 cell.addActionListener(e -> cell.setText(currentPress));
                 break;
             }
