@@ -47,6 +47,16 @@
                   <text value="Reset Menu"/>
                 </properties>
               </component>
+              <component id="cf7fe" class="javax.swing.JPopupMenu$Separator">
+                <constraints/>
+                <properties/>
+              </component>
+              <component id="cc384" class="javax.swing.JMenuItem" binding="exitMenuItem">
+                <constraints/>
+                <properties>
+                  <text value="Exit"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="fa97c" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
@@ -105,12 +115,6 @@
                 <constraints/>
                 <properties>
                   <text value="Help"/>
-                </properties>
-              </component>
-              <component id="cc384" class="javax.swing.JMenuItem" binding="exitMenuItem">
-                <constraints/>
-                <properties>
-                  <text value="Exit"/>
                 </properties>
               </component>
             </children>
