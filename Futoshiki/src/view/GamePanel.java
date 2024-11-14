@@ -78,6 +78,12 @@ public class GamePanel {
             }
         });
 
+        resetGameMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                gameFutoshiki.setBoard(settings);
+            }
+        });
+
     }
 
     private void createUIComponents(){

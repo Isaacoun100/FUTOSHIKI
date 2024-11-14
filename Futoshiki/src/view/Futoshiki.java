@@ -18,10 +18,16 @@ public class Futoshiki extends JPanel implements ActionListener {
     private ArrayList<JButton> gameButtons;
     private ArrayList<JLabel> contrainsLabel;
     private ArrayList<Button> sideButtons;
-    private String currentPress = "_";
+    private String currentPress = "";
     private Board board;
 
     public Futoshiki(Settings settings) {
+        setBoard(settings);
+    }
+
+    public void setBoard(Settings settings) {
+
+        this.removeAll();
 
         int matrix = settings.getSize();
 
@@ -99,15 +105,15 @@ public class Futoshiki extends JPanel implements ActionListener {
         }
 
         for (int i = 0; i < matrix; i++) {
-            addCell(String.valueOf(i), matrix, sidePanel);
+            addCell(String.valueOf(i+1), matrix, sidePanel);
         }
+
         addCell("Delete", matrix, sidePanel);
 
         panel.add(gamePanel, BorderLayout.WEST);
         panel.add(emptyPanel, BorderLayout.CENTER);
         panel.add(sidePanel, BorderLayout.EAST);
         add(panel);
-
     }
 
     private JButton getButton(int cell_i, int cell_j, int matrix) {
@@ -115,7 +121,8 @@ public class Futoshiki extends JPanel implements ActionListener {
 
         for (Value value : board.getValues()) {
             if( value.getY()== cell_i && value.getX()== cell_j){
-                cell.setLabel(String.valueOf(value.getValue()));
+                cell.setText(String.valueOf(value.getValue()));
+                cell.addActionListener(e -> cell.setText(currentPress));
                 break;
             }
         }
@@ -129,7 +136,7 @@ public class Futoshiki extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
-        System.out.println("Button " + clickedButton.getLabel() + " clicked");
+        clickedButton.setText(currentPress);
     }
 
     private void defaultBoard(Settings settings){
@@ -145,6 +152,14 @@ public class Futoshiki extends JPanel implements ActionListener {
     private void addCell (String label, int matrix, JPanel sidePanel){
         Button option = new Button(label);
         option.setPreferredSize( new Dimension( 350/matrix, 350/matrix ) );
+
+        option.addActionListener(e -> {
+            if(label.equals("Delete"))
+                currentPress = "";
+            else
+                currentPress = label;
+        });
+
         sidePanel.add( option );
         sideButtons.add( option );
     }
