@@ -18,6 +18,7 @@ public class Futoshiki extends JPanel implements ActionListener {
     private ArrayList<JButton> gameButtons;
     private String currentPress = "";
     private Board board;
+    private Integer[][] futoshiki;
 
     /**
      * Constructor for the Futoshiki JPanel class, this panel will run when the class is being
@@ -41,6 +42,9 @@ public class Futoshiki extends JPanel implements ActionListener {
 
         // The dimension for the board
         int matrix = settings.getSize();
+
+        // Create number array
+        futoshiki = new Integer[matrix][matrix];
 
         // This array will have the buttons that we will add to the board, this will later be use to check the state
         gameButtons = new ArrayList<>();
@@ -84,23 +88,18 @@ public class Futoshiki extends JPanel implements ActionListener {
                     if(currentPosition%2!=0){
                         JLabel label = new JLabel() ;
 
-                        for (Constrain constraint : board.getConstraints()) {
-
-                            if( constraint.getY1() == constraint.getY2() && i%2==0 && constraint.getY1() == cell_i ){
-                                if( constraint.getX1() == cell_j-1){
+                        for (Constrain constraint : new ArrayList<>(board.getConstraints())) {
+                            if (constraint.getY1() == constraint.getY2() && i % 2 == 0 && constraint.getY1() == cell_i) {
+                                if (constraint.getX1() == cell_j - 1) {
                                     label.setText(constraint.getEquals());
-                                    board.getConstraints().remove(constraint);
-                                    break;
+                                    break; // No need to remove the constraint
+                                }
+                            } else if (constraint.getX1() == constraint.getX2() && constraint.getX1() == cons_j) {
+                                if (constraint.getY1() == cell_i - 1) {
+                                    label.setText(constraint.getEquals());
+                                    break; // No need to remove the constraint
                                 }
                             }
-                            else if (constraint.getX1() == constraint.getX2() && constraint.getX1() == cons_j ) {
-                                if( constraint.getY1() == cell_i-1){
-                                    label.setText(constraint.getEquals());
-                                    board.getConstraints().remove(constraint);
-                                    break;
-                                }
-                            }
-
                         }
 
                         label.setPreferredSize( new Dimension( 300/matrix, 300/matrix ) );
@@ -218,6 +217,66 @@ public class Futoshiki extends JPanel implements ActionListener {
         });
 
         sidePanel.add( option );
+    }
+
+    public boolean isGameComplete(int matrix ){
+
+        int currentPosition = 0;
+        int n = futoshiki.length;
+
+        for (int i = 0; i < matrix; i++) {
+            for (int j = 0; j < matrix; j++) {
+
+                String buttonValue = gameButtons.get(currentPosition).getText();
+
+                if(buttonValue.equals(""))
+                    return false;
+                else
+                    futoshiki[i][j] = Integer.parseInt(buttonValue);
+
+                currentPosition++;
+            }
+        }
+
+
+        for (int i = 0; i < n; i++) {
+
+            // Boolean array
+            boolean[] rowCheck = new boolean[n];
+            boolean[] colCheck = new boolean[n];
+
+            for (int j = 0; j < n; j++) {
+                // Check row
+                int rowValue = futoshiki[i][j];
+                if (rowValue < 1 || rowValue > n || rowCheck[rowValue - 1]) {
+                    return false; // Invalid value or duplicate in row
+                }
+                rowCheck[rowValue - 1] = true;
+
+                // Check column
+                int colValue = futoshiki[j][i];
+                if (colValue < 1 || colValue > n || colCheck[colValue - 1]) {
+                    return false; // Invalid value or duplicate in column
+                }
+                colCheck[colValue - 1] = true;
+            }
+        }
+
+        for( Constrain constraint : board.getConstraints() ){
+
+            if( constraint.getEquals().equals("<") ){
+                if( futoshiki[constraint.getY1()][constraint.getX1()] > futoshiki[constraint.getY2()][constraint.getX2()] ){
+                    return false;
+                }
+            }
+            else if (constraint.getEquals().equals(">") ){
+                if( futoshiki[constraint.getY1()][constraint.getX1()] < futoshiki[constraint.getY2()][constraint.getX2()] ){
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
 }

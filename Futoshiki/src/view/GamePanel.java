@@ -84,6 +84,17 @@ public class GamePanel {
             }
         });
 
+        finishGameMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                if( gameFutoshiki.isGameComplete(settings.getSize()) ){
+                    JOptionPane.showMessageDialog(frame, "Congrats, you have finished the game!");
+                }
+                else {
+                    JOptionPane.showMessageDialog(frame, "Sorry, you have not finished the game!");
+                }
+            }
+        });
+
     }
 
     private void createUIComponents(){
