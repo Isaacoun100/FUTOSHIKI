@@ -19,6 +19,9 @@ public class Futoshiki extends JPanel implements ActionListener {
     private String currentPress = "";
     private Board board;
     private Integer[][] futoshiki;
+    private int matrix;
+    private int cellSize;
+    private int cellFont;
 
     /**
      * Constructor for the Futoshiki JPanel class, this panel will run when the class is being
@@ -41,7 +44,11 @@ public class Futoshiki extends JPanel implements ActionListener {
         this.removeAll();
 
         // The dimension for the board
-        int matrix = settings.getSize();
+        this.matrix = settings.getSize();
+
+        // Cell properties
+        this.cellSize = 400/matrix;
+        this.cellFont = 100/matrix;
 
         // Create number array
         futoshiki = new Integer[matrix][matrix];
@@ -78,7 +85,7 @@ public class Futoshiki extends JPanel implements ActionListener {
                 // It checks if the label it an empty one where no label is needed
                 if(i%2!=0 && j%2!=0){
                     JLabel label = new JLabel();
-                    label.setPreferredSize( new Dimension( 300/matrix, 300/matrix ) );
+                    label.setPreferredSize( new Dimension( cellSize, cellSize ) );
                     gamePanel.add(label);
                     currentPosition++;
                 }
@@ -102,8 +109,9 @@ public class Futoshiki extends JPanel implements ActionListener {
                             }
                         }
 
-                        label.setPreferredSize( new Dimension( 300/matrix, 300/matrix ) );
+                        label.setPreferredSize( new Dimension( cellSize, cellSize ) );
                         label.setHorizontalAlignment(SwingConstants.CENTER);
+                        label.setFont( new Font( "Arial", Font.BOLD, cellFont ) );
                         gamePanel.add( label );
                         currentPosition++;
                         cons_j++;
@@ -144,6 +152,7 @@ public class Futoshiki extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
         clickedButton.setText(currentPress);
+        clickedButton.setFont( new Font( "Arial", Font.BOLD, cellFont ) );
     }
 
     /**
@@ -172,9 +181,10 @@ public class Futoshiki extends JPanel implements ActionListener {
         }
 
         // The size of the button gets calculated using this formula to keep it same size
-        cell.setPreferredSize( new Dimension( 300/ matrix, 300/ matrix) );
+        cell.setPreferredSize( new Dimension( cellSize, cellSize) );
 
-        // Cell color
+        // Cell properties
+        cell.setFont( new Font( "Arial", Font.BOLD, cellFont ) );
         cell.setBackground(Color.decode("#ADD8E6"));
         cell.setForeground(Color.black);
 
@@ -206,7 +216,7 @@ public class Futoshiki extends JPanel implements ActionListener {
         Button option = new Button(label);
 
         // Button size is calculated depending on the matrix size
-        option.setPreferredSize( new Dimension( 350/matrix, 350/matrix ) );
+        option.setPreferredSize( new Dimension( cellSize, cellSize ) );
 
         // It adds an action listener to the button that is being created
         option.addActionListener(e -> {
@@ -216,6 +226,7 @@ public class Futoshiki extends JPanel implements ActionListener {
                 currentPress = label;
         });
 
+        option.setFont(new Font( "Arial", Font.BOLD, cellFont ));
         sidePanel.add( option );
     }
 
