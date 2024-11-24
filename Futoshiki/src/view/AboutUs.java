@@ -1,5 +1,7 @@
 package view;
 
+import model.User;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ public class AboutUs {
     private JButton returnToMainMenuButton;
     private JPanel AboutUsPanel;
 
-    public AboutUs() {
+    public AboutUs(User user) {
 
         JFrame frame = new JFrame("Home Screen");
         frame.setContentPane(AboutUsPanel);
@@ -21,7 +23,7 @@ public class AboutUs {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new HomeScreen();
+                new HomeScreen(user);
             }
         });
     }
