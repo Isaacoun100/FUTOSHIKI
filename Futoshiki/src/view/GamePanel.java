@@ -1,6 +1,7 @@
 package view;
 
 import model.Settings;
+import model.User;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,16 +25,16 @@ public class GamePanel {
     private JMenuItem exitMenuItem;
     private JPanel boardPanel;
     private Futoshiki gameFutoshiki;
-    private Settings settings;
+    private User user;
 
-    public GamePanel(Settings settings ) {
+    public GamePanel(User user ) {
 
-        this.settings = settings;
+        this.user = user;
 
         JFrame frame = new JFrame("Futoshiki");
         frame.setContentPane(gamePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(650+(settings.getSize()*55), 600+(settings.getSize()*35) );
+        frame.setSize(850+(user.getSettings().getSize()*55), 700+(user.getSettings().getSize()*35) );
         frame.setResizable(false);
         frame.setVisible(true);
 
@@ -46,47 +47,47 @@ public class GamePanel {
         helpMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 frame.dispose();
-                new HelpScreen();
+                new HelpScreen(user);
             }
         });
 
         aboutUsMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 frame.dispose();
-                new AboutUs();
+                new AboutUs(user);
             }
         });
 
         topMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 frame.dispose();
-                new TopScreen();
+                new TopScreen(user);
             }
         });
 
         settingsMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 frame.dispose();
-                new SettingsScreen(settings);
+                new SettingsScreen(user);
             }
         });
 
         mainMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 frame.dispose();
-                new HomeScreen();
+                new HomeScreen(user);
             }
         });
 
         resetGameMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                gameFutoshiki.setBoard(settings);
+                gameFutoshiki.setBoard(user.getSettings());
             }
         });
 
         finishGameMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                if( gameFutoshiki.isGameComplete(settings.getSize()) ){
+                if( gameFutoshiki.isGameComplete(user.getSettings().getSize()) ){
                     JOptionPane.showMessageDialog(frame, "Congrats, you have finished the game!");
                 }
                 else {
@@ -98,7 +99,7 @@ public class GamePanel {
     }
 
     private void createUIComponents(){
-        gameFutoshiki = new Futoshiki(settings);
+        gameFutoshiki = new Futoshiki(user.getSettings());
     }
 
 }
