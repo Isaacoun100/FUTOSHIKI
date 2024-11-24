@@ -1,5 +1,7 @@
 package view;
 
+import model.User;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ public class HelpScreen {
     private JButton returnToHomeButton;
     private JPanel HelpScreenPanel;
 
-    public HelpScreen() {
+    public HelpScreen( User user ) {
 
         JFrame frame = new JFrame("Help");
         frame.setContentPane(HelpScreenPanel);
@@ -21,7 +23,7 @@ public class HelpScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new HomeScreen();
+                new HomeScreen( user );
             }
         });
     }

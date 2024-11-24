@@ -2,6 +2,7 @@ package view;
 
 import controller.ManageSettings;
 import model.Settings;
+import model.User;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class SettingsScreen {
     private JButton defaultButton;
     private JComboBox sideComboBox;
 
-    public SettingsScreen(Settings settings) {
+    public SettingsScreen(User user) {
 
         JFrame frame = new JFrame("Add Admin");
         frame.setContentPane(SettingsPanel);
@@ -31,13 +32,13 @@ public class SettingsScreen {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        setValues(settings);
+        setValues(user.getSettings());
 
         returnToPreviousMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new HomeScreen();
+                new HomeScreen(user);
             }
         });
         saveChangesButton.addActionListener(new ActionListener() {
@@ -45,13 +46,17 @@ public class SettingsScreen {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    ManageSettings.setSettings( new Settings(
+
+                    user.setSettings( new Settings(
                             sizeComboBox.getSelectedIndex()+3,
                             valueOf(difficultyComboBox.getSelectedItem()),
                             Boolean.parseBoolean(valueOf(multilevelComboBox.getSelectedItem())),
                             valueOf(timeComboBox.getSelectedItem()),
                             valueOf(sideComboBox.getSelectedItem())
                     ));
+
+                    ManageSettings.setSettings(user.getSettings());
+
                 }
                 catch (IOException | ParseException ex) {
                     System.out.println("Can't assign the values");
@@ -64,19 +69,32 @@ public class SettingsScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                try {
-                    Settings settings = new Settings(
-                            3,
-                            "Easy",
-                            false,
-                            "Stopwatch",
-                            "Right");
+                int choice = JOptionPane.showConfirmDialog(
+                        null,
+                        "Changing the settings will delete your progress",
+                        "Confirmation",
+                        JOptionPane.YES_NO_CANCEL_OPTION
+                );
 
-                    ManageSettings.setSettings(settings);
-                    setValues(settings);
-                }
-                catch (IOException | ParseException ex) {
-                    throw new RuntimeException(ex);
+                if (choice == JOptionPane.YES_OPTION) {
+
+                    try {
+                        Settings settings = new Settings(
+                                3,
+                                "Easy",
+                                false,
+                                "Stopwatch",
+                                "Right");
+
+                        user.setMatrix( new int[sizeComboBox.getSelectedIndex()+3][sizeComboBox.getSelectedIndex()+3] );
+                        user.setSettings(settings);
+                        ManageSettings.setSettings(settings);
+                        setValues(settings);
+                    }
+                    catch (IOException | ParseException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                 }
 
             }

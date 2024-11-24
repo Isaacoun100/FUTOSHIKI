@@ -4,6 +4,7 @@ import controller.ManageLeaderboard;
 import model.Leaderboard;
 import model.Record;
 import model.RecordList;
+import model.User;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class TopScreen {
     private JList easyList;
     Leaderboard leaderboard = addValues();
 
-    public TopScreen() {
+    public TopScreen( User user ) {
 
         JFrame frame = new JFrame("Top 10");
         frame.setContentPane(topPanel);
@@ -37,7 +38,7 @@ public class TopScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new HomeScreen();
+                new HomeScreen(user);
             }
         });
         sizeComboBox.addItemListener(new ItemListener() {
