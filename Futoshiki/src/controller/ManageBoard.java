@@ -43,18 +43,24 @@ public class ManageBoard {
             );
         }
 
-        for ( Object newObj : constraints){
-            JSONObject constraint = (JSONObject) newObj;
-            constraintList.add( new Constrain(
-                    Integer.parseInt(String.valueOf(constraint.get("x1"))),
-                    Integer.parseInt(String.valueOf(constraint.get("y1"))),
-                    Integer.parseInt(String.valueOf(constraint.get("x2"))),
-                    Integer.parseInt(String.valueOf(constraint.get("y2"))),
-                    String.valueOf(constraint.get("equals"))
-            ));
-        }
+        createConstrain(constraints, constraintList);
 
         return new Board(valueList, constraintList);
+    }
+
+    static void createConstrain(JSONArray currentConstrain, ArrayList<Constrain> constrains) {
+        for( Object newObject : currentConstrain ) {
+            JSONObject newConstrain = (JSONObject) newObject;
+
+            constrains.add(new Constrain(
+                    Integer.parseInt(String.valueOf(newConstrain.get("x1"))),
+                    Integer.parseInt(String.valueOf(newConstrain.get("y1"))),
+                    Integer.parseInt(String.valueOf(newConstrain.get("x2"))),
+                    Integer.parseInt(String.valueOf(newConstrain.get("y2"))),
+                    String.valueOf(newConstrain.get("equals"))
+            ));
+
+        }
     }
 
 }
