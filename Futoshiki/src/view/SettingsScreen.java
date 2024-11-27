@@ -1,6 +1,7 @@
 package view;
 
 import controller.ManageSettings;
+import controller.ManageUser;
 import model.Settings;
 import model.User;
 import org.json.simple.parser.ParseException;
@@ -9,6 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static java.lang.String.valueOf;
 
@@ -47,15 +49,35 @@ public class SettingsScreen {
 
                 try {
 
-                    user.setSettings( new Settings(
-                            sizeComboBox.getSelectedIndex()+3,
-                            valueOf(difficultyComboBox.getSelectedItem()),
-                            Boolean.parseBoolean(valueOf(multilevelComboBox.getSelectedItem())),
-                            valueOf(timeComboBox.getSelectedItem()),
-                            valueOf(sideComboBox.getSelectedItem())
-                    ));
+                    int choice = JOptionPane.showConfirmDialog(
+                            null,
+                            "Changing the settings will delete your progress, do you want to continue?",
+                            "Confirmation",
+                            JOptionPane.YES_NO_CANCEL_OPTION
+                    );
 
-                    ManageSettings.setSettings(user.getSettings());
+                    if (choice == JOptionPane.YES_OPTION) {
+                        user.setSettings( new Settings(
+                                sizeComboBox.getSelectedIndex()+3,
+                                valueOf(difficultyComboBox.getSelectedItem()),
+                                Boolean.parseBoolean(valueOf(multilevelComboBox.getSelectedItem())),
+                                valueOf(timeComboBox.getSelectedItem()),
+                                valueOf(sideComboBox.getSelectedItem())
+                        ));
+
+                        user.setMatrix( new int[sizeComboBox.getSelectedIndex()+3][sizeComboBox.getSelectedIndex()+3] );
+                        user.setConstrains( new ArrayList<>() );
+                        user.setValues( new ArrayList<>() );
+
+                        ManageSettings.setSettings(user.getSettings());
+
+                        if(!user.getUsername().isEmpty()){
+                            ManageUser.setUser(user);
+                        }
+
+                    }
+
+
 
                 }
                 catch (IOException | ParseException ex) {
@@ -71,7 +93,7 @@ public class SettingsScreen {
 
                 int choice = JOptionPane.showConfirmDialog(
                         null,
-                        "Changing the settings will delete your progress",
+                        "Changing the settings will delete your progress, do you want to continue?",
                         "Confirmation",
                         JOptionPane.YES_NO_CANCEL_OPTION
                 );
@@ -87,6 +109,8 @@ public class SettingsScreen {
                                 "Right");
 
                         user.setMatrix( new int[sizeComboBox.getSelectedIndex()+3][sizeComboBox.getSelectedIndex()+3] );
+                        user.setConstrains( new ArrayList<>() );
+                        user.setValues( new ArrayList<>() );
                         user.setSettings(settings);
                         ManageSettings.setSettings(settings);
                         setValues(settings);
