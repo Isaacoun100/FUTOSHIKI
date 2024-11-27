@@ -96,6 +96,30 @@ public class GamePanel {
             }
         });
 
+        saveGameMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                gameFutoshiki.saveGame(user);
+            }
+        });
+
+         loadGameMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                gameFutoshiki.loadGame(user);
+            }
+        });
+
+        undoMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                gameFutoshiki.undo();
+            }
+        });
+
+        redoMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                gameFutoshiki.undo();
+            }
+        });
+
     }
 
     private void createUIComponents(){
