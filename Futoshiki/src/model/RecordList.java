@@ -44,4 +44,18 @@ public class RecordList {
         hard.add(record);
     }
 
+    public void setRecord(Record record, String difficulty) {
+        switch (difficulty){
+            case "Easy":
+                easy.add(record);
+                break;
+            case "Intermediate":
+                intermediate.add(record);
+                break;
+            case "Hard":
+                hard.add(record);
+                break;
+        }
+    }
+
 }
