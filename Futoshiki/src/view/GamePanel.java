@@ -87,7 +87,7 @@ public class GamePanel {
 
         finishGameMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                if( gameFutoshiki.isGameComplete(user.getSettings().getSize()) ){
+                if( gameFutoshiki.isGameComplete(user)){
                     JOptionPane.showMessageDialog(frame, "Congrats, you have finished the game!");
                 }
                 else {

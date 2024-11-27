@@ -39,6 +39,7 @@ public class HomeScreen {
                         "",
                         new int[settings.getSize()][settings.getSize()],
                         new ArrayList<>(),
+                        new ArrayList<>(),
                         ""
                 );
             }
