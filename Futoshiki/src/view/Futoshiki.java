@@ -17,6 +17,7 @@ public class Futoshiki extends JPanel implements ActionListener {
 
     private ArrayList<JButton> gameButtons;
     private String currentPress = "";
+    private String previousPress = "";
     private Board board;
     private Integer[][] futoshiki;
     private int matrix;
@@ -24,6 +25,7 @@ public class Futoshiki extends JPanel implements ActionListener {
     private int cellFont;
     private int baseTime = 0;
     private int activeTime = 0;
+    private JButton pressedButton;
 
     /**
      * Constructor for the Futoshiki JPanel class, this panel will run when the class is being
@@ -31,6 +33,9 @@ public class Futoshiki extends JPanel implements ActionListener {
      * @param settings The Settings variable is the basic info for the program to run
      */
     public Futoshiki(Settings settings) {
+
+        // This call updates the board that will be used to set the defaults
+        defaultBoard(settings);
         setBoard(settings);
     }
 
@@ -58,9 +63,6 @@ public class Futoshiki extends JPanel implements ActionListener {
         // This array will have the buttons that we will add to the board, this will later be use to check the state
         gameButtons = new ArrayList<>();
 
-        // This call updates the board that will be used to set the defaults
-        defaultBoard(settings);
-
         // The game panel is the one where we will be playing
         JPanel gamePanel = new JPanel(new GridLayout( 2*matrix-1, 2*matrix-1, 10, 10 ));
 
@@ -77,6 +79,7 @@ public class Futoshiki extends JPanel implements ActionListener {
 
         int currentPosition = 0; // Current position is the number of items that has been added between buttons and labels
         int cell_i = 0; // The cell_i variable indicates the real row where the buttons are
+        ArrayList<Constrain> e = new ArrayList<>( board.getConstraints() );
 
         // Here we add the buttons that will be the cells for the game
         for (int i = 0; i < 2*matrix-1 ; i++) {
@@ -100,15 +103,20 @@ public class Futoshiki extends JPanel implements ActionListener {
                     if(currentPosition%2!=0){
                         JLabel label = new JLabel() ;
 
-                        for (Constrain constraint : new ArrayList<>(board.getConstraints())) {
+                        for (Constrain constraint : e) {
                             if (constraint.getY1() == constraint.getY2() && i % 2 == 0 && constraint.getY1() == cell_i) {
                                 if (constraint.getX1() == cell_j - 1) {
                                     label.setText(constraint.getEquals());
+                                    e.remove(constraint);
                                     break; // No need to remove the constraint
                                 }
                             } else if (constraint.getX1() == constraint.getX2() && constraint.getX1() == cons_j) {
                                 if (constraint.getY1() == cell_i - 1) {
-                                    label.setText(constraint.getEquals());
+                                    if(!constraint.getEquals().equals("<"))
+                                        label.setText("V");
+                                    else
+                                        label.setText("Λ");
+                                    e.remove(constraint);
                                     break; // No need to remove the constraint
                                 }
                             }
@@ -219,8 +227,34 @@ public class Futoshiki extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
+        pressedButton = clickedButton;
+        previousPress = clickedButton.getText();
         clickedButton.setText(currentPress);
         clickedButton.setFont( new Font( "Arial", Font.BOLD, cellFont ) );
+    }
+
+    public void saveGame(User user){
+
+        user.setConstrains( board.getConstraints() );
+        user.setValues( board.getValues() );
+
+        user.setMatrix( new int[matrix][matrix] );
+
+        int currentPosition = 0;
+
+        for (int i = 0; i < matrix; i++) {
+            for (int j = 0; j < matrix; j++) {
+
+                String value = gameButtons.get(currentPosition).getText();
+
+                if(!value.isEmpty())
+                    user.getMatrix()[i][j] = Integer.parseInt(value);
+                else
+                    user.getMatrix()[i][j] = 0;
+
+                currentPosition++;
+            }
+        }
     }
 
     /**
@@ -274,29 +308,6 @@ public class Futoshiki extends JPanel implements ActionListener {
         }
     }
 
-    /**
-     * This method creates the buttons necessary for the side panel to be created
-     * @param label The label string the button will have
-     * @param matrix The matrix dimension
-     * @param sidePanel The panel where it will be added
-     */
-    private void addSideButton(String label, int matrix, JPanel sidePanel){
-        Button option = new Button(label);
-
-        // Button size is calculated depending on the matrix size
-        option.setPreferredSize( new Dimension( cellSize, cellSize ) );
-
-        // It adds an action listener to the button that is being created
-        option.addActionListener(e -> {
-            if(label.equals("Delete"))
-                currentPress = "";
-            else
-                currentPress = label;
-        });
-
-        option.setFont(new Font( "Arial", Font.BOLD, cellFont ));
-        sidePanel.add( option );
-    }
 
     public boolean isGameComplete(User user ){
 
@@ -364,6 +375,69 @@ public class Futoshiki extends JPanel implements ActionListener {
                     ));
         }
         return true;
+    }
+
+    public void loadGame( User user ){
+
+        ArrayList<Value> values = new ArrayList<>();
+
+        board.setValues( user.getValues() );
+        board.setConstraints( user.getConstrains() );
+
+        setBoard( user.getSettings() );
+
+        int currentPosition = 0;
+
+        for (int i = 0; i < user.getSettings().getSize(); i++)
+            for (int j = 0; j < user.getSettings().getSize(); j++){
+
+                int value = user.getMatrix()[i][j];
+
+                if(value!=0)
+                    gameButtons.get(currentPosition).setText( String.valueOf(value) );
+                else
+                    gameButtons.get(currentPosition).setText("");
+
+                currentPosition++;
+            }
+
+    }
+
+    public void undo(){
+
+        for(JButton button : gameButtons){
+            if(button == pressedButton){
+                System.out.println("Equals found");
+                String newPress = button.getText();
+                button.setText( previousPress );
+                previousPress = newPress;
+            }
+        }
+
+    }
+
+    /**
+     * This method creates the buttons necessary for the side panel to be created
+     * @param label The label string the button will have
+     * @param matrix The matrix dimension
+     * @param sidePanel The panel where it will be added
+     */
+    private void addSideButton(String label, int matrix, JPanel sidePanel){
+        Button option = new Button(label);
+
+        // Button size is calculated depending on the matrix size
+        option.setPreferredSize( new Dimension( cellSize, cellSize ) );
+
+        // It adds an action listener to the button that is being created
+        option.addActionListener(e -> {
+            if(label.equals("Delete"))
+                currentPress = "";
+            else
+                currentPress = label;
+        });
+
+        option.setFont(new Font( "Arial", Font.BOLD, cellFont ));
+        sidePanel.add( option );
     }
 
     private void checkRecord(Settings settings, Record record){
