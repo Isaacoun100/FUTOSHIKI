@@ -1,16 +1,16 @@
 package view;
 
 import controller.ManageBoard;
-import model.Board;
-import model.Constrain;
-import model.Settings;
-import model.Value;
+import controller.ManageLeaderboard;
+import model.*;
+import model.Record;
 import org.json.simple.parser.ParseException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Futoshiki extends JPanel implements ActionListener {
@@ -22,6 +22,8 @@ public class Futoshiki extends JPanel implements ActionListener {
     private int matrix;
     private int cellSize;
     private int cellFont;
+    private int baseTime = 0;
+    private int activeTime = 0;
 
     /**
      * Constructor for the Futoshiki JPanel class, this panel will run when the class is being
@@ -63,12 +65,15 @@ public class Futoshiki extends JPanel implements ActionListener {
         JPanel gamePanel = new JPanel(new GridLayout( 2*matrix-1, 2*matrix-1, 10, 10 ));
 
         // The side panel is the one where the buttons will be to change the state of the board
-        JPanel sidePanel = new JPanel(new GridLayout( matrix+1, 0, 10, 10 ));
+        JPanel sidePanel = new JPanel(new GridLayout( matrix+2, 0, 10, 10 ));
 
         // This panel is a gap between the center of the board and the buttons
         JPanel emptyPanel = new JPanel();
         emptyPanel.setPreferredSize(new Dimension(100, 0));
 
+        // Panel for the timer
+        JPanel timePanel = new JPanel();
+        sidePanel.add(timePanel);
 
         int currentPosition = 0; // Current position is the number of items that has been added between buttons and labels
         int cell_i = 0; // The cell_i variable indicates the real row where the buttons are
@@ -137,6 +142,62 @@ public class Futoshiki extends JPanel implements ActionListener {
             addSideButton(String.valueOf(i+1), matrix, sidePanel);
         }
         addSideButton("Delete", matrix, sidePanel);
+
+        JLabel timerLabel = new JLabel("Time: ");
+        timerLabel.setFont(new Font("Arial", Font.BOLD, 24));
+
+        Timer timer = null;
+
+        switch (settings.getClock()){
+
+            case "Timer":
+                // Create a timer to update the label every second
+                timer = new Timer(1000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        activeTime++;
+                        timerLabel.setText("Time: " + formatTime(activeTime));
+                    }
+                });
+
+                timePanel.add(timerLabel);
+                timer.start();
+
+                break;
+            case "Stopwatch":
+
+                switch (settings.getDifficulty()){
+                    case "Easy":
+                        activeTime = baseTime = 180*matrix;
+                        break;
+                    case "Intermediate":
+                        activeTime = baseTime = 120*matrix;
+                        break;
+                    case "Hard":
+                        activeTime = baseTime = 90*matrix;
+                        break;
+                }
+
+                timer = new Timer(1000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (activeTime > 0) {
+                            activeTime--;
+                            timerLabel.setText("Time: " + formatTime(activeTime));
+                        } else {
+                            ((Timer) e.getSource()).stop(); // Stop the timer when it reaches 0
+                            JOptionPane.showMessageDialog(null, "Time's up!");
+                        }
+                    }
+                });
+
+                timePanel.add(timerLabel);
+                timer.start();
+
+                break;
+
+        }
+
         if(settings.getSide().equals("Right")){
             add(gamePanel, BorderLayout.WEST);
             add(emptyPanel, BorderLayout.CENTER);
@@ -146,6 +207,8 @@ public class Futoshiki extends JPanel implements ActionListener {
             add(sidePanel, BorderLayout.WEST);
             add(emptyPanel, BorderLayout.CENTER);
             add(gamePanel, BorderLayout.EAST);
+        }
+
     }
 
     /**
