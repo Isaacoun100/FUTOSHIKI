@@ -28,27 +28,20 @@ public class ManageBoard {
         JSONObject difficulty = (JSONObject) jsonObject.get(settings.getDifficulty());
         JSONArray size = (JSONArray) difficulty.get(String.valueOf(settings.getSize()));
         JSONObject board = (JSONObject) size.get(random.nextInt(size.size()));
+
         JSONArray values = (JSONArray) board.get("values");
         JSONArray constraints = (JSONArray) board.get("constraints");
 
         ArrayList<Value> valueList = new ArrayList<>();
         ArrayList<Constrain> constraintList = new ArrayList<>();
 
-        for ( Object newObj : values){
-            JSONObject value = (JSONObject) newObj;
-            valueList.add( new Value(
-                    Integer.parseInt(String.valueOf(value.get("x"))),
-                    Integer.parseInt(String.valueOf(value.get("y"))),
-                    Integer.parseInt(String.valueOf(value.get("value"))))
-            );
-        }
-
-        createConstrain(constraints, constraintList);
+        createConstrain(constraints, constraintList, values, valueList);
 
         return new Board(valueList, constraintList);
     }
 
-    static void createConstrain(JSONArray currentConstrain, ArrayList<Constrain> constrains) {
+    static void createConstrain(JSONArray currentConstrain, ArrayList<Constrain> constrains, JSONArray values, ArrayList<Value> valueList) {
+
         for( Object newObject : currentConstrain ) {
             JSONObject newConstrain = (JSONObject) newObject;
 
@@ -60,6 +53,15 @@ public class ManageBoard {
                     String.valueOf(newConstrain.get("equals"))
             ));
 
+        }
+
+        for ( Object newObj : values){
+            JSONObject value = (JSONObject) newObj;
+            valueList.add( new Value(
+                    Integer.parseInt(String.valueOf(value.get("x"))),
+                    Integer.parseInt(String.valueOf(value.get("y"))),
+                    Integer.parseInt(String.valueOf(value.get("value"))))
+            );
         }
     }
 

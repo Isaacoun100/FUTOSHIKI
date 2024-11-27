@@ -287,7 +287,36 @@ public class Futoshiki extends JPanel implements ActionListener {
             }
         }
 
+        if( !user.getUsername().isEmpty() ){
+            checkRecord(
+                    user.getSettings(),
+                    new Record(
+                            user.getUsername(),
+                            LocalTime.ofSecondOfDay( Math.abs(baseTime - activeTime))
+                    ));
+        }
         return true;
+    }
+
+    private void checkRecord(Settings settings, Record record){
+
+        if( !settings.getClock().equals("No") ){
+            try {
+                ManageLeaderboard.addRecord(record, matrix, settings.getDifficulty());
+            }
+            catch (IOException | ParseException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Unable to load leaderboard", JOptionPane.ERROR_MESSAGE);
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    private String formatTime(int totalSeconds) {
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
 }
