@@ -15,6 +15,7 @@ public class StartScreen {
     private JButton playButton;
     private JButton continueAnonymouslyButton;
     private JPanel startScreenPanel;
+    private JButton createANewUserButton;
 
     public StartScreen() {
 
@@ -58,6 +59,13 @@ public class StartScreen {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 new HomeScreen(null);
+            }
+        });
+        createANewUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new NewUser();
             }
         });
     }

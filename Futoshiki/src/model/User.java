@@ -8,13 +8,15 @@ public class User {
     private String password;
     private int[][] matrix;
     private ArrayList<Constrain> constrains;
+    private ArrayList<Value> values;
     private String username;
 
-    public User(Settings settings, String password, int[][] matrix, ArrayList<Constrain> constrains, String username) {
+    public User(Settings settings, String password, int[][] matrix, ArrayList<Constrain> constrains, ArrayList<Value> values, String username) {
         this.settings = settings;
         this.password = password;
         this.matrix = matrix;
         this.constrains = constrains;
+        this.values = values;
         this.username = username;
     }
 
@@ -57,4 +59,13 @@ public class User {
     public void setConstrains(ArrayList<Constrain> constrains) {
         this.constrains = constrains;
     }
+
+    public ArrayList<Value> getValues() {
+        return values;
+    }
+
+    public void setValues(ArrayList<Value> values) {
+        this.values = values;
+    }
+
 }
