@@ -235,7 +235,7 @@ public class Futoshiki extends JPanel implements ActionListener {
         sidePanel.add( option );
     }
 
-    public boolean isGameComplete(int matrix ){
+    public boolean isGameComplete(User user ){
 
         int currentPosition = 0;
         int n = futoshiki.length;
