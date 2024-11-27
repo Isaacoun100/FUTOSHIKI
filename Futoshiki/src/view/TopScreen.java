@@ -32,8 +32,6 @@ public class TopScreen {
         frame.setResizable(false);
         frame.setVisible(true);
 
-        System.out.println("Pin point");
-
         returnToPreviousMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,9 +110,9 @@ public class TopScreen {
             hardList.addElement( record.getUsername() + "  →  " + record.getTime().toString() );
         }
 
-        this.hardList.setModel(easyList);
+        this.hardList.setModel(hardList);
         this.intermediateList.setModel(intermediateList);
-        this.easyList.setModel(hardList);
+        this.easyList.setModel(easyList);
 
     }
 
