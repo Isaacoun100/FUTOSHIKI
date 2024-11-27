@@ -137,10 +137,15 @@ public class Futoshiki extends JPanel implements ActionListener {
             addSideButton(String.valueOf(i+1), matrix, sidePanel);
         }
         addSideButton("Delete", matrix, sidePanel);
-        
-        add(gamePanel, BorderLayout.WEST);
-        add(emptyPanel, BorderLayout.CENTER);
-        add(sidePanel, BorderLayout.EAST);
+        if(settings.getSide().equals("Right")){
+            add(gamePanel, BorderLayout.WEST);
+            add(emptyPanel, BorderLayout.CENTER);
+            add(sidePanel, BorderLayout.EAST);
+        }
+        else if(settings.getSide().equals("Left")){
+            add(sidePanel, BorderLayout.WEST);
+            add(emptyPanel, BorderLayout.CENTER);
+            add(gamePanel, BorderLayout.EAST);
     }
 
     /**
