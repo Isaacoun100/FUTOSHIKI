@@ -1,7 +1,1 @@
-{
-  "difficulty": "Easy",
-  "button": "Right",
-  "size": 3,
-  "multilevel": false,
-  "clock": "Stopwatch"
-}
+{"difficulty":"Easy","button":"Right","size":3,"multilevel":false,"clock":"Stopwatch"}
