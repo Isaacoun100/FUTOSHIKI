@@ -34,7 +34,7 @@ public class GamePanel {
         JFrame frame = new JFrame("Futoshiki");
         frame.setContentPane(gamePanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(850+(user.getSettings().getSize()*55), 700+(user.getSettings().getSize()*35) );
+        frame.setSize(850+(user.getSettings().getSize()*55), 750+(user.getSettings().getSize()*35) );
         frame.setResizable(false);
         frame.setVisible(true);
 
@@ -87,11 +87,19 @@ public class GamePanel {
 
         finishGameMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
-                if( gameFutoshiki.isGameComplete(user)){
-                    JOptionPane.showMessageDialog(frame, "Congrats, you have finished the game!");
-                }
+
+                if(user.getSettings().isMultilevel())
+
+                    gameFutoshiki.multilevel(user);
+
                 else {
-                    JOptionPane.showMessageDialog(frame, "Sorry, you have not finished the game!");
+
+                    if (gameFutoshiki.isGameComplete(user)){
+                        gameFutoshiki.addRecord(user);
+                        JOptionPane.showMessageDialog(frame, "Congrats, you have finished the game!");
+                    }
+                    else
+                        JOptionPane.showMessageDialog(frame, "Sorry, you have not finished the game!");
                 }
             }
         });
@@ -122,6 +130,9 @@ public class GamePanel {
 
     }
 
+    /**
+     * Loads the board where we will be playing
+     */
     private void createUIComponents(){
         gameFutoshiki = new Futoshiki(user.getSettings());
     }

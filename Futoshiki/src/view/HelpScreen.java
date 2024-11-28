@@ -53,6 +53,9 @@ public class HelpScreen {
         });
     }
 
+    /**
+     * Loads the pdf viewer
+     */
     private void createUIComponents() {
 
         pdfViewerPanel = new PDFViewerPanel();

@@ -26,6 +26,7 @@ public class Futoshiki extends JPanel implements ActionListener {
     private int baseTime = 0;
     private int activeTime = 0;
     private JButton pressedButton;
+    private Timer timer;
 
     /**
      * Constructor for the Futoshiki JPanel class, this panel will run when the class is being
@@ -46,6 +47,9 @@ public class Futoshiki extends JPanel implements ActionListener {
      * @param settings The basic settings the game needs to function
      */
     public void setBoard(Settings settings) {
+
+        if (timer != null && timer.isRunning())
+            timer.stop();
 
         // The JPanel gets clean to add the new board
         this.removeAll();
@@ -154,24 +158,23 @@ public class Futoshiki extends JPanel implements ActionListener {
         JLabel timerLabel = new JLabel("Time: ");
         timerLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        Timer timer = null;
+        activeTime = 0;
+        baseTime = 0;
+
 
         switch (settings.getClock()){
 
             case "Timer":
                 // Create a timer to update the label every second
-                timer = new Timer(1000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        activeTime++;
-                        timerLabel.setText("Time: " + formatTime(activeTime));
-                    }
+                timer = new Timer(1000, e1 -> {
+                    activeTime++;
+                    timerLabel.setText("Time: " + formatTime(activeTime));
                 });
 
                 timePanel.add(timerLabel);
                 timer.start();
-
                 break;
+
             case "Stopwatch":
 
                 switch (settings.getDifficulty()){
@@ -233,15 +236,22 @@ public class Futoshiki extends JPanel implements ActionListener {
         clickedButton.setFont( new Font( "Arial", Font.BOLD, cellFont ) );
     }
 
+    /**
+     * This method saves the current state of the game to the user information
+     * @param user The user where the information will be added
+     */
     public void saveGame(User user){
 
+        // Gets the user information
         user.setConstrains( board.getConstraints() );
         user.setValues( board.getValues() );
 
+        // Sets up a new matrix
         user.setMatrix( new int[matrix][matrix] );
 
         int currentPosition = 0;
 
+        // Cycles through the buttons and saves the state
         for (int i = 0; i < matrix; i++) {
             for (int j = 0; j < matrix; j++) {
 
@@ -308,12 +318,50 @@ public class Futoshiki extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * It activates the multilevel mode
+     * @param user The user that is going to play multilevel
+     */
+    public void multilevel(User user){
 
+        if(isGameComplete(user)){
+
+            addRecord(user);
+
+            switch (user.getSettings().getDifficulty()){
+                case "Easy":
+                    JOptionPane.showMessageDialog(null, "Easy level complete! Loading Intermediate");
+                    user.getSettings().setDifficulty("Intermediate");
+                    defaultBoard(user.getSettings());
+                    setBoard(user.getSettings());
+                    break;
+                case "Intermediate":
+                    JOptionPane.showMessageDialog(null, "Intermediate level complete! Loading Hard");
+                    JOptionPane.showMessageDialog(null, "Multilevel complete, congrats!");
+                    user.getSettings().setDifficulty("Hard");
+                    defaultBoard(user.getSettings());
+                    setBoard(user.getSettings());
+                    break;
+                case "Hard":
+                    JOptionPane.showMessageDialog(null, "Multilevel complete, congrats!");
+                    break;
+            }
+        }
+
+
+    }
+
+    /**
+     * Checks if the game is complete
+     * @param user The user configuration
+     * @return It returns true if the game is complete, false if it doesn't meet the requirements
+     */
     public boolean isGameComplete(User user ){
 
         int currentPosition = 0;
         int n = futoshiki.length;
 
+        // Checks if the board has an empty space, also adds the values to a matrix
         for (int i = 0; i < matrix; i++) {
             for (int j = 0; j < matrix; j++) {
 
@@ -328,7 +376,7 @@ public class Futoshiki extends JPanel implements ActionListener {
             }
         }
 
-
+        // Checks if the vertical and horizontal match that they have all the numbers
         for (int i = 0; i < n; i++) {
 
             // Boolean array
@@ -352,6 +400,7 @@ public class Futoshiki extends JPanel implements ActionListener {
             }
         }
 
+        // Checks if the constraints work
         for( Constrain constraint : board.getConstraints() ){
 
             if( constraint.getEquals().equals("<") ){
@@ -365,7 +414,14 @@ public class Futoshiki extends JPanel implements ActionListener {
                 }
             }
         }
+        return true;
+    }
 
+    /**
+     * Checks if the time record is in the top 10
+     * @param user The user to name the record
+     */
+    public void addRecord(User user){
         if( !user.getUsername().isEmpty() ){
             checkRecord(
                     user.getSettings(),
@@ -374,9 +430,12 @@ public class Futoshiki extends JPanel implements ActionListener {
                             LocalTime.ofSecondOfDay( Math.abs(baseTime - activeTime))
                     ));
         }
-        return true;
     }
 
+    /**
+     * Loads the game that the user has saved
+     * @param user The user that has the loaded file
+     */
     public void loadGame( User user ){
 
         ArrayList<Value> values = new ArrayList<>();
@@ -403,6 +462,10 @@ public class Futoshiki extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Undoes the last move, for some reason, undo and redo have the same logic, and I don't
+     * understand why, like I get it because I programmed it, but it doesn't make sense
+     */
     public void undo(){
 
         for(JButton button : gameButtons){
@@ -440,6 +503,11 @@ public class Futoshiki extends JPanel implements ActionListener {
         sidePanel.add( option );
     }
 
+    /**
+     * Checks if the new record is correct and the user can be in the top 10
+     * @param settings The board settings
+     * @param record The new record
+     */
     private void checkRecord(Settings settings, Record record){
 
         if( !settings.getClock().equals("No") ){
@@ -454,6 +522,11 @@ public class Futoshiki extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Formats the seconds in the correct TimeDate to String
+     * @param totalSeconds The seconds to parse
+     * @return The string of the time converted
+     */
     private String formatTime(int totalSeconds) {
         int hours = totalSeconds / 3600;
         int minutes = (totalSeconds % 3600) / 60;
