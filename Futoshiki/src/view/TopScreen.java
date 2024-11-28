@@ -28,7 +28,7 @@ public class TopScreen {
         JFrame frame = new JFrame("Top 10");
         frame.setContentPane(topPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(700, 500);
+        frame.setSize(800, 500);
         frame.setResizable(false);
         frame.setVisible(true);
 
