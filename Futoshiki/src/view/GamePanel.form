@@ -9,12 +9,16 @@
     <children>
       <grid id="b3a7d" class="javax.swing.JMenuBar" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
         <constraints border-constraint="North"/>
-        <properties/>
+        <properties>
+          <enabled value="true"/>
+          <font name="Arial" size="18" style="0"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="f4b7c" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
             <constraints/>
             <properties>
+              <font name="Arial" size="20" style="0"/>
               <text value="File"/>
             </properties>
             <border type="none"/>
@@ -22,12 +26,14 @@
               <component id="7b321" class="javax.swing.JMenuItem" binding="saveGameMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Save game"/>
                 </properties>
               </component>
               <component id="20eaa" class="javax.swing.JMenuItem" binding="loadGameMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Load game"/>
                 </properties>
               </component>
@@ -38,12 +44,14 @@
               <component id="150d4" class="javax.swing.JMenuItem" binding="finishGameMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Finish Game"/>
                 </properties>
               </component>
               <component id="40f08" class="javax.swing.JMenuItem" binding="resetGameMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Reset Menu"/>
                 </properties>
               </component>
@@ -54,6 +62,7 @@
               <component id="cc384" class="javax.swing.JMenuItem" binding="exitMenuItem">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Exit"/>
                 </properties>
               </component>
@@ -62,6 +71,7 @@
           <grid id="fa97c" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
             <constraints/>
             <properties>
+              <font name="Arial" size="20" style="0"/>
               <text value="Options"/>
             </properties>
             <border type="none"/>
@@ -69,12 +79,14 @@
               <component id="6028e" class="javax.swing.JMenuItem" binding="undoMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Undo (Ctrl+Z)"/>
                 </properties>
               </component>
               <component id="37fc9" class="javax.swing.JMenuItem" binding="redoMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Redo (Ctrl+Y)"/>
                 </properties>
               </component>
@@ -83,6 +95,7 @@
           <grid id="b2802" class="javax.swing.JMenu" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
             <constraints/>
             <properties>
+              <font name="Arial" size="20" style="0"/>
               <text value="More"/>
             </properties>
             <border type="none"/>
@@ -90,30 +103,35 @@
               <component id="79565" class="javax.swing.JMenuItem" binding="mainMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Main menu"/>
                 </properties>
               </component>
               <component id="ce49c" class="javax.swing.JMenuItem" binding="settingsMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Settings"/>
                 </properties>
               </component>
               <component id="a914b" class="javax.swing.JMenuItem" binding="topMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Top 10"/>
                 </properties>
               </component>
               <component id="247fb" class="javax.swing.JMenuItem" binding="aboutUsMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="About us"/>
                 </properties>
               </component>
               <component id="d4a8" class="javax.swing.JMenuItem" binding="helpMenu">
                 <constraints/>
                 <properties>
+                  <font name="Arial" size="20" style="0"/>
                   <text value="Help"/>
                 </properties>
               </component>

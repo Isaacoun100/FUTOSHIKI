@@ -21,6 +21,7 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Arial" size="18" style="0"/>
               <text value="Username"/>
             </properties>
           </component>
@@ -30,7 +31,9 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <font name="Arial" size="18" style="0"/>
+            </properties>
           </component>
           <hspacer id="b2665">
             <constraints>
@@ -47,6 +50,7 @@
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Arial" size="18" style="0"/>
               <text value="Password"/>
             </properties>
           </component>
@@ -56,13 +60,16 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <font name="Arial" size="18" style="0"/>
+            </properties>
           </component>
           <component id="ae315" class="javax.swing.JButton" binding="playButton" default-binding="true">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Arial" size="18" style="0"/>
               <text value="Play"/>
             </properties>
           </component>
@@ -71,6 +78,7 @@
               <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Arial" size="18" style="0"/>
               <text value="Continue anonymously"/>
             </properties>
           </component>
@@ -79,6 +87,7 @@
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Arial" size="18" style="0"/>
               <text value="Create a new user"/>
             </properties>
           </component>
@@ -89,6 +98,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Arial" size="18" style="0"/>
           <text value="Welcome to Futoshiki"/>
         </properties>
       </component>
