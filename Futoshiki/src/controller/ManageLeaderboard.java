@@ -52,6 +52,14 @@ public class ManageLeaderboard {
         return leaderboard;
     }
 
+    /**
+     * Takes the record, matrix size and difficulty and adds it to the top 10 if the time fits
+     * @param record The record to check
+     * @param matrix The size of the board
+     * @param difficulty The difficulty of the board
+     * @throws IOException The filed doesn't exist
+     * @throws ParseException Unable to parse the file
+     */
     public static void addRecord(Record record, int matrix, String difficulty) throws IOException, ParseException {
 
         Object object = new JSONParser().parse(new FileReader(leaderboardFile));
@@ -90,6 +98,12 @@ public class ManageLeaderboard {
         writer.close();
     }
 
+    /**
+     * Returns Auxiliar class to addRecord
+     * @param newArray The array to add
+     * @param recordList The list of records
+     * @param difficulty The difficulty
+     */
     private static void getList ( JSONArray newArray, RecordList recordList, String difficulty ){
         for (Object record : newArray) {
             JSONObject recordObject = (JSONObject) record;

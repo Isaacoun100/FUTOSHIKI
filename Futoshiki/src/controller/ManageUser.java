@@ -19,6 +19,14 @@ public class ManageUser {
     // User file that will look for
     static String userFile = "Futoshiki/src/bin/user.json";
 
+    /**
+     * This method will check if the user exists
+     * @param username The username to check
+     * @param password The password to check
+     * @return It returns a User if the method finds one, NULL if it doesn't
+     * @throws IOException If the file doesn't exist
+     * @throws ParseException if the file can't be parsed
+     */
     public static User signIn ( String username, String password ) throws IOException, ParseException {
 
         Object file = new JSONParser().parse(new FileReader(userFile));
@@ -71,6 +79,13 @@ public class ManageUser {
 
     }
 
+    /**
+     * It creates and saves a new user based on the User provided
+     * @param user The user that will be used to create
+     * @return True if the user was created, false if not
+     * @throws IOException If the file doesn't exist
+     * @throws ParseException if the file can't be parsed
+     */
     public static boolean createUser ( User user ) throws IOException, ParseException {
         Object file = new JSONParser().parse(new FileReader(userFile));
         JSONArray jsonArray = (JSONArray) file;
@@ -108,6 +123,12 @@ public class ManageUser {
         return false;
     }
 
+    /**
+     * This method takes the User and finds the user it matches in the file and it updates it
+     * @param user The user to update and its information
+     * @throws IOException If the file doesn't exist
+     * @throws ParseException if the file can't be parsed
+     */
     public static void setUser(User user) throws IOException, ParseException {
         Object file = new JSONParser().parse(new FileReader(userFile));
         JSONArray jsonArray = (JSONArray) file;
@@ -172,7 +193,13 @@ public class ManageUser {
         writer.close();
     }
 
-
+    /**
+     * Checks if the username provided exists
+     * @param username The username to check
+     * @return
+     * @throws IOException If the file doesn't exist
+     * @throws ParseException if the file can't be parsed
+     */
     private static boolean isUser(String username) throws IOException, ParseException {
 
         Object file = new JSONParser().parse(new FileReader(userFile));

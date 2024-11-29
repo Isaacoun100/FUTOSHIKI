@@ -66,7 +66,7 @@ public class AboutUs {
         pdfViewerPanel = new PDFViewerPanel();
 
         try {
-            pdfViewerPanel.loadPdf("Documentation/Programa2Futoshiki.pdf");
+            pdfViewerPanel.loadPdf("Documentation/programa2_futoshiki_documentación_del_proyecto.pdf");
         } catch (IOException e) {
             System.out.println("Unable to load document");
             throw new RuntimeException(e);

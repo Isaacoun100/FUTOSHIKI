@@ -1,11 +1,14 @@
 package view;
 
+import controller.ManageUser;
 import model.Settings;
 import model.User;
+import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GamePanel {
 
@@ -107,6 +110,12 @@ public class GamePanel {
         saveGameMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 gameFutoshiki.saveGame(user);
+                try {
+                    ManageUser.setUser(user);
+                }
+                catch (IOException | ParseException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 

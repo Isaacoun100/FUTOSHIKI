@@ -40,30 +40,36 @@ public class NewUser {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                try {
-                    if(ManageUser.createUser(
-                            new User( new Settings(
-                                    3,
-                                    "Easy",
-                                    false,
-                                    "No",
-                                    "Right"
-                                   ),
-                                    passwordField.getText(),
-                                    new int[3][3],
-                                    new ArrayList<>(),
-                                    new ArrayList<>(),
-                                    usernameTextField.getText()
-                            ))){
-                        JOptionPane.showMessageDialog(frame, "User Created Successfully");
+                if(usernameTextField.getText().length()>5 && !passwordField.getText().isEmpty()) {
+                    try {
+                        if(ManageUser.createUser(
+                                new User( new Settings(
+                                        3,
+                                        "Easy",
+                                        false,
+                                        "No",
+                                        "Right"
+                                       ),
+                                        passwordField.getText(),
+                                        new int[3][3],
+                                        new ArrayList<>(),
+                                        new ArrayList<>(),
+                                        usernameTextField.getText()
+                                ))){
+                            JOptionPane.showMessageDialog(frame, "User Created Successfully");
+                        }
+                        else
+                            JOptionPane.showMessageDialog(frame, "Unable to create user");
                     }
-                    else
-                        JOptionPane.showMessageDialog(frame, "Unable to create user");
+                    catch (IOException | ParseException ex) {
+                        JOptionPane.showMessageDialog(frame, "There was a problem creating the user");
+                        throw new RuntimeException(ex);
+                    }
                 }
-                catch (IOException | ParseException ex) {
-                    JOptionPane.showMessageDialog(frame, "There was a problem creating the user");
-                    throw new RuntimeException(ex);
+                else{
+                    JOptionPane.showMessageDialog(frame, "Username should be greater than 5 characters and password cannot be empty");
                 }
+
             }
         });
     }

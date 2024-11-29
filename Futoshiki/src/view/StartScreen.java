@@ -42,7 +42,6 @@ public class StartScreen {
                     }
                     else {
                         JOptionPane.showMessageDialog(frame, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
-                        usernameField.setText("");
                         passwordField.setText("");
                     }
 

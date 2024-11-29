@@ -40,6 +40,13 @@ public class ManageBoard {
         return new Board(valueList, constraintList);
     }
 
+    /**
+     * Adds a new constraint to the list
+     * @param currentConstrain The constraint to add
+     * @param constrains The array of constraint
+     * @param values The value that has.
+     * @param valueList The list of values
+     */
     static void createConstrain(JSONArray currentConstrain, ArrayList<Constrain> constrains, JSONArray values, ArrayList<Value> valueList) {
 
         for( Object newObject : currentConstrain ) {

@@ -61,7 +61,7 @@ public class HelpScreen {
         pdfViewerPanel = new PDFViewerPanel();
 
         try {
-            pdfViewerPanel.loadPdf("Documentation/Programa2Futoshiki.pdf");
+            pdfViewerPanel.loadPdf("Documentation/programa2_futoshiki_manual_de_usuario.pdf");
         } catch (IOException e) {
             System.out.println("Unable to load document");
             throw new RuntimeException(e);
